@@ -80,8 +80,8 @@ public class App extends Args4jBoilerplate
                     tag("a", Map.of("href", worldPath + "/map/"), t(worldName))
                 ),
                 div(span(t("Seed")), span(t(compoundTag.getLong("RandomSeed")))),
-                div(span(t("Type")), span(t(compoundTag.getInt("GameType")))),
-                div(span(t("Difficulty")), span(t(compoundTag.getInt("Difficulty"))))
+                div(span(t("Type")), span(t(_gameType(compoundTag)))),
+                div(span(t("Difficulty")), span(t(_difficulty(compoundTag))))
             ).accept(w);
 
             w.flush();
@@ -90,6 +90,28 @@ public class App extends Args4jBoilerplate
         catch (IOException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    private String _gameType(CompoundTag compoundTag)
+    {
+        switch (compoundTag.getInt("GameType"))
+        {
+            case 1: return "Creative";
+            case 0: return "Survival";
+            default: return "Unknown";
+        }
+    }
+
+    private String _difficulty(CompoundTag compoundTag)
+    {
+        switch (compoundTag.getInt("Difficulty"))
+        {
+            case 0: return "Peaceful";
+            case 1: return "Easy";
+            case 2: return "Normal";
+            case 3: return "Hard";
+            default: return "Unknown";
         }
     }
 

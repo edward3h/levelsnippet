@@ -103,7 +103,7 @@ public class App extends Args4jBoilerplate
     {
         long epoch = compoundTag.getLong("LastPlayed");
         Instant instant = Instant.ofEpochSecond(epoch);
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
         LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
         return localDateTime.format(formatter);
     }

@@ -11,6 +11,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -81,7 +86,8 @@ public class App extends Args4jBoilerplate
                 ),
                 div(span(t("Seed")), span(t(compoundTag.getLong("RandomSeed")))),
                 div(span(t("Type")), span(t(_gameType(compoundTag)))),
-                div(span(t("Difficulty")), span(t(_difficulty(compoundTag))))
+                div(span(t("Difficulty")), span(t(_difficulty(compoundTag)))),
+                div(span(t("Last Played")), span(t(_lastPlayed(compoundTag))))
             ).accept(w);
 
             w.flush();
@@ -91,6 +97,15 @@ public class App extends Args4jBoilerplate
         {
             e.printStackTrace();
         }
+    }
+
+    private String _lastPlayed(CompoundTag compoundTag)
+    {
+        long epoch = compoundTag.getLong("LastPlayed");
+        Instant instant = Instant.ofEpochSecond(epoch);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return localDateTime.format(formatter);
     }
 
     private String _gameType(CompoundTag compoundTag)

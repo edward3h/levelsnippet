@@ -28,6 +28,7 @@ dependencies {
 
     // Use TestNG framework, also requires calling test.useTestNG() below
     testImplementation 'org.testng:testng:6.14.3'
+    testImplementation 'org.hamcrest:hamcrest-all:1.3'
 
     implementation 'com.github.edward3h:NBT:little-endian-support-SNAPSHOT'
     implementation 'com.github.edward3h:args4jboilerplate:master-SNAPSHOT'
@@ -43,3 +44,8 @@ test {
     // Use TestNG for unit tests
     useTestNG()
 }
+
+task bootstrapDependencies(type:Exec) {
+    commandLine "script/bootstrap"
+}
+compileJava.dependsOn bootstrapDependencies
